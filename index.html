@@ -1,130 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FFAM AI Tool by Nizam</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <style>
-    #codeView { white-space: pre-wrap; font-family: monospace; background: #f1f1f1; padding: 1rem; border-radius: 8px; }
-    .tab-active { background-color: #6b46c1; color: white; }
+    body { font-family: sans-serif; background: #f9fafb; }
+    .app-card { background: white; border-radius: 12px; padding: 1rem; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    .app-card img { border-radius: 8px; max-height: 140px; object-fit: cover; }
+    footer { font-size: 0.8rem; text-align: center; margin-top: 2rem; color: #777; }
   </style>
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans">
-
-  <header class="text-center py-6 bg-purple-600 text-white shadow">
+<body>
+  <header class="bg-purple-700 text-white py-6 text-center">
     <h1 class="text-3xl font-bold">FFAM AI Tool</h1>
-    <p class="text-sm mt-1">Create Android & iOS apps with AI – by Nizam</p>
-    <button onclick="signIn()" id="loginBtn" class="mt-4 bg-white text-purple-700 px-4 py-2 rounded shadow">🔐 Login with Google</button>
-    <div id="userInfo" class="mt-2 text-sm hidden"></div>
-  </header>
+    <p class="text-sm mt-1">Create, Share & Publish Android Apps Instantly</p>
+  </header>  <main class="max-w-4xl mx-auto px-4 py-6">
+    <section class="mb-6">
+      <input type="text" placeholder="Search app type (e.g. Quiz, OTT)" class="w-full border p-3 rounded" />
+    </section><section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="app-list">
+  <div class="app-card">
+    <img src="movieapp.png" alt="Movie App" class="w-full mb-2">
+    <h2 class="font-bold text-lg">🎬 Movie App</h2>
+    <p class="text-sm text-gray-600 mb-3">Multilingual movie streaming app with premium plans and subtitle support.</p>
+    <a href="public/movieapp.apk" class="block bg-green-600 text-white text-center py-2 rounded">📥 Download APK</a>
+  </div>
 
-  <main class="max-w-xl mx-auto mt-6 px-4">
-    <div class="flex space-x-2 justify-center">
-      <button onclick="setPlatform('android')" id="androidTab" class="px-4 py-2 border rounded tab-active">Android</button>
-      <button onclick="setPlatform('ios')" id="iosTab" class="px-4 py-2 border rounded">iOS</button>
-    </div>
+  <div class="app-card">
+    <img src="quizapp.png" alt="Quiz App" class="w-full mb-2">
+    <h2 class="font-bold text-lg">🧠 Quiz App</h2>
+    <p class="text-sm text-gray-600 mb-3">Interactive quiz app with timer, leaderboard, and category selection.</p>
+    <a href="public/quizapp.apk" class="block bg-green-600 text-white text-center py-2 rounded">📥 Download APK</a>
+  </div>
+</section>
 
-    <textarea id="prompt" rows="4" class="w-full p-3 mt-4 rounded border" placeholder="e.g. Create a quiz app with leaderboard"></textarea>
+<section class="mt-12">
+  <h2 class="text-xl font-bold mb-4">🚀 Submit Your App to FFAM AI Store</h2>
+  <form class="bg-white p-6 rounded shadow space-y-4">
+    <input type="text" placeholder="App Title" class="w-full p-3 border rounded">
+    <input type="file" accept="image/*" class="w-full p-2 border rounded">
+    <input type="file" accept=".apk,.aab" class="w-full p-2 border rounded">
+    <textarea placeholder="App Description" rows="4" class="w-full p-3 border rounded"></textarea>
+    <button class="bg-purple-700 text-white px-4 py-2 rounded w-full">Submit for Review</button>
+  </form>
+</section>
 
-    <h2 class="mt-6 font-semibold">Choose Premium Plan:</h2>
-    <select class="w-full border rounded p-2 mt-2" id="planSelect">
-      <option>Free Plan – 1 App Download</option>
-      <option>Basic Plan – ₹149/month</option>
-      <option>Pro Plan – ₹399/month</option>
-      <option>Ultra Plan – ₹699/month</option>
-    </select>
-
-    <button onclick="generateApp()" class="mt-4 w-full bg-purple-600 text-white p-3 rounded hover:bg-purple-700">
-      Generate App
+<section class="mt-12">
+  <h2 class="text-xl font-bold mb-4 text-center">💰 Upgrade to FFAM AI Ultra Plan</h2>
+  <p class="text-center text-gray-700">Create unlimited apps and unlock AAB downloads</p>
+  <div class="text-center mt-4">
+    <p class="font-semibold">Pay ₹699 via UPI:</p>
+    <p class="text-lg font-bold text-purple-700">nizamuddin@ybl</p>
+    <p class="text-sm text-gray-500">(Account Holder: Jubeda – Verified UDYAM MSME)</p>
+    <img src="qr-code.png" alt="UPI QR Code" class="mx-auto mt-4 w-40 rounded shadow">
+    <button onclick="alert('Please complete your payment via UPI and click OK to continue.')" class="mt-4 bg-green-600 text-white px-6 py-2 rounded">
+      ✅ I Have Paid – Unlock Downloads
     </button>
+  </div>
+</section>
 
-    <div id="previewBox" class="mt-6 p-4 bg-white rounded shadow hidden">
-      <h2 class="font-bold text-lg mb-2">🧠 App Ready</h2>
-      <p class="text-sm mb-2">Platform: <span id="platformText" class="font-semibold"></span></p>
-      <a id="downloadLink1" href="#" target="_blank" class="block mt-2 bg-green-600 text-white text-center p-3 rounded">⬇ Download File 1</a>
-      <a id="downloadLink2" href="#" target="_blank" class="block mt-2 bg-blue-600 text-white text-center p-3 rounded">⬇ Download File 2</a>
-      <button onclick="showCode()" class="block mt-4 w-full bg-gray-800 text-white p-2 rounded">👁 View Code</button>
-    </div>
-
-    <div id="codeBox" class="hidden mt-6">
-      <h2 class="font-bold text-lg mb-2">💻 Sample Code</h2>
-      <div id="codeView">// Code will appear here...</div>
-    </div>
-  </main>
-
-  <footer class="text-center py-4 mt-10 text-sm text-gray-500">
-    FFAM.ai © 2025 · Built by Nizam
+  </main>  <footer>
+    FFAM AI Tool © 2025 – Built & Owned by Nizam. All Rights Reserved.
   </footer>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBz3iMkFwWoHyWQRvJ27jbhHbdQg7jQsO0",
-      authDomain: "ffam-ai.firebaseapp.com",
-      projectId: "ffam-ai",
-      storageBucket: "ffam-ai.firebasestorage.app",
-      messagingSenderId: "35751659358",
-      appId: "1:35751659358:web:341ed27314b5e4e1c771cf",
-      measurementId: "G-ZBPQLZM5KM"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    let platform = "android";
-
-    function signIn() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider).then(result => {
-        const user = result.user;
-        document.getElementById('userInfo').innerText = "👤 " + user.displayName + " (" + user.email + ")";
-        document.getElementById('userInfo').classList.remove("hidden");
-        document.getElementById('loginBtn').classList.add("hidden");
-      });
-    }
-
-    function setPlatform(p) {
-      platform = p;
-      document.getElementById('androidTab').classList.remove("tab-active");
-      document.getElementById('iosTab').classList.remove("tab-active");
-      document.getElementById(p + "Tab").classList.add("tab-active");
-    }
-
-    function generateApp() {
-      const idea = document.getElementById('prompt').value.toLowerCase();
-      const link1 = document.getElementById('downloadLink1');
-      const link2 = document.getElementById('downloadLink2');
-      const previewBox = document.getElementById('previewBox');
-      const codeView = document.getElementById('codeView');
-      const platformText = document.getElementById('platformText');
-
-      platformText.innerText = platform.toUpperCase();
-
-      let code = "";
-      if (platform === "android") {
-        link1.href = "https://yourdomain.com/public/ffam_android.aab";  // replace with your real link
-        link1.innerText = "⬇ Download AAB";
-        link2.href = "https://yourdomain.com/public/ffam_android.apk";  // replace with your real link
-        link2.innerText = "⬇ Download APK";
-        code = `// Android App Code\nfunction startApp() {\n  console.log("Android app running");\n}`;
-      } else {
-        link1.href = "https://yourdomain.com/public/ffam_ios.swift";
-        link1.innerText = "⬇ Download Swift Code";
-        link2.href = "https://yourdomain.com/public/ffam_ios.ipa";
-        link2.innerText = "⬇ Download IPA";
-        code = `// iOS Swift Code\nimport SwiftUI\nstruct ContentView: View {\n  var body: some View {\n    Text("Hello iOS!")\n  }\n}`;
-      }
-
-      codeView.innerText = code;
-      previewBox.classList.remove("hidden");
-      document.getElementById('codeBox').classList.add("hidden");
-    }
-
-    function showCode() {
-      document.getElementById('codeBox').classList.remove("hidden");
-    }
-  </script>
-
 </body>
 </html>
