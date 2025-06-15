@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FFAM AI – App Builder</title>
+  <title>FFAM AI Tool by Nizam</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
@@ -29,13 +29,21 @@
 
     <textarea id="prompt" rows="4" class="w-full p-3 mt-4 rounded border" placeholder="e.g. Create a quiz app with leaderboard"></textarea>
 
+    <h2 class="mt-6 font-semibold">Choose Premium Plan:</h2>
+    <select class="w-full border rounded p-2 mt-2" id="planSelect">
+      <option>Free Plan – 1 App Download</option>
+      <option>Basic Plan – ₹149/month</option>
+      <option>Pro Plan – ₹399/month</option>
+      <option>Ultra Plan – ₹699/month</option>
+    </select>
+
     <button onclick="generateApp()" class="mt-4 w-full bg-purple-600 text-white p-3 rounded hover:bg-purple-700">
       Generate App
     </button>
 
     <div id="previewBox" class="mt-6 p-4 bg-white rounded shadow hidden">
       <h2 class="font-bold text-lg mb-2">🧠 App Ready</h2>
-      <p class="text-sm mb-2">Generated for: <span id="platformText" class="font-semibold"></span></p>
+      <p class="text-sm mb-2">Platform: <span id="platformText" class="font-semibold"></span></p>
       <a id="downloadLink1" href="#" target="_blank" class="block mt-2 bg-green-600 text-white text-center p-3 rounded">⬇ Download File 1</a>
       <a id="downloadLink2" href="#" target="_blank" class="block mt-2 bg-blue-600 text-white text-center p-3 rounded">⬇ Download File 2</a>
       <button onclick="showCode()" class="block mt-4 w-full bg-gray-800 text-white p-2 rounded">👁 View Code</button>
@@ -48,7 +56,7 @@
   </main>
 
   <footer class="text-center py-4 mt-10 text-sm text-gray-500">
-    FFAM.ai © 2025 · Created by Nizam
+    FFAM.ai © 2025 · Built by Nizam
   </footer>
 
   <script>
@@ -95,17 +103,17 @@
 
       let code = "";
       if (platform === "android") {
-        link1.href = "https://example.com/ffam_android.aab";
+        link1.href = "https://yourdomain.com/public/ffam_android.aab";  // replace with your real link
         link1.innerText = "⬇ Download AAB";
-        link2.href = "https://example.com/ffam_android.apk";
+        link2.href = "https://yourdomain.com/public/ffam_android.apk";  // replace with your real link
         link2.innerText = "⬇ Download APK";
-        code = `// Android (Java)\npublic class MainActivity extends AppCompatActivity {\n  @Override\n  protected void onCreate(Bundle savedInstanceState) {\n    super.onCreate(savedInstanceState);\n    setContentView(R.layout.activity_main);\n  }\n}`;
+        code = `// Android App Code\nfunction startApp() {\n  console.log("Android app running");\n}`;
       } else {
-        link1.href = "https://example.com/ffam_ios.swift";
+        link1.href = "https://yourdomain.com/public/ffam_ios.swift";
         link1.innerText = "⬇ Download Swift Code";
-        link2.href = "https://example.com/ffam_ios.ipa";
+        link2.href = "https://yourdomain.com/public/ffam_ios.ipa";
         link2.innerText = "⬇ Download IPA";
-        code = `// iOS (Swift)\nimport SwiftUI\nstruct ContentView: View {\n  var body: some View {\n    Text("Hello from FFAM!")\n  }\n}`;
+        code = `// iOS Swift Code\nimport SwiftUI\nstruct ContentView: View {\n  var body: some View {\n    Text("Hello iOS!")\n  }\n}`;
       }
 
       codeView.innerText = code;
