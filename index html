@@ -5,57 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FFAM AI Tool by Nizam</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans">
 
   <header class="text-center py-6 bg-purple-600 text-white shadow">
     <h1 class="text-3xl font-bold">FFAM AI Tool</h1>
     <p class="text-sm mt-1">Create Android apps with AI – by Nizam</p>
+    <button onclick="signIn()" id="loginBtn" class="mt-4 bg-white text-purple-700 px-4 py-2 rounded shadow">🔐 Login with Google</button>
+    <div id="userInfo" class="mt-2 text-sm hidden"></div>
   </header>
 
   <main class="max-w-xl mx-auto mt-10 px-4">
-    <label class="block mb-2 font-semibold text-lg">Enter your app idea:</label>
-    <textarea id="prompt" rows="4" class="w-full p-3 rounded border" placeholder="e.g. Create OTT app with Premium plans"></textarea>
+    <textarea id="prompt" rows="4" class="w-full p-3 rounded border" placeholder="e.g. Create OTT app"></textarea>
 
-    <button onclick="generatePreview()" class="mt-4 w-full bg-purple-600 text-white p-3 rounded hover:bg-purple-700">
+    <button onclick="generateApp()" class="mt-4 w-full bg-purple-600 text-white p-3 rounded hover:bg-purple-700">
       Generate App
     </button>
 
-    <div id="preview" class="mt-6 p-4 bg-white rounded shadow hidden">
-      <h2 class="font-bold text-lg mb-2">🧠 AI App Preview</h2>
-      <p id="previewText" class="text-sm text-gray-700">...</p>
-      <a id="downloadBtn" href="#" class="mt-4 inline-block bg-green-600 text-white p-3 rounded hover:bg-green-700">⬇️ Download .AAB</a>
+    <div id="previewBox" class="mt-6 p-4 bg-white rounded shadow hidden">
+      <h2 class="font-bold text-lg mb-2">🧠 App Preview</h2>
+      <a id="aabBtn" href="#" target="_blank" class="block mt-2 bg-green-600 text-white text-center p-3 rounded">⬇️ Download AAB</a>
     </div>
   </main>
 
   <footer class="text-center py-4 mt-10 text-sm text-gray-500">
-    Made with ❤️ by Nizam · FFAM.ai · 2025
+    Built with ❤️ by Nizam · FFAM.ai · 2025
   </footer>
 
   <script>
-    function generatePreview() {
+    // FFAM Firebase Project Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBz3iMkFwWoHyWQRvJ27jbhHbdQg7jQsO0",
+      authDomain: "ffam-ai.firebaseapp.com",
+      projectId: "ffam-ai",
+      storageBucket: "ffam-ai.firebasestorage.app",
+      messagingSenderId: "35751659358",
+      appId: "1:35751659358:web:341ed27314b5e4e1c771cf",
+      measurementId: "G-ZBPQLZM5KM"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function signIn() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).then(result => {
+        const user = result.user;
+        document.getElementById('userInfo').innerText = "👤 " + user.displayName + " (" + user.email + ")";
+        document.getElementById('userInfo').classList.remove("hidden");
+        document.getElementById('loginBtn').classList.add("hidden");
+      });
+    }
+
+    function generateApp() {
       const idea = document.getElementById('prompt').value.toLowerCase();
-      const preview = document.getElementById('preview');
-      const previewText = document.getElementById('previewText');
-      const downloadBtn = document.getElementById('downloadBtn');
+      const aabBtn = document.getElementById('aabBtn');
+      const previewBox = document.getElementById('previewBox');
 
-      let link = "#";
-      let desc = "Default NM App";
-
+      let aabLink = "#";
       if (idea.includes("ott")) {
-        link = "https://pixeldrain.com/u/9qshg1zM"; // sample OTT .aab
-        desc = "Includes Home, Watch Movies, Premium plans";
+        aabLink = "https://example.com/ott_app.aab";
       } else if (idea.includes("quiz")) {
-        link = "https://pixeldrain.com/u/x13u47or"; // sample quiz .aab
-        desc = "Includes quiz questions, score system";
+        aabLink = "https://example.com/quiz_app.aab";
       } else {
-        link = "https://pixeldrain.com/u/gj0d9vLT"; // default NM App
-        desc = "Default NM App bundle with language info";
+        aabLink = "https://example.com/nm_app.aab";
       }
 
-      previewText.innerText = "✅ " + desc;
-      downloadBtn.href = link;
-      preview.classList.remove("hidden");
+      aabBtn.href = aabLink;
+      previewBox.classList.remove("hidden");
     }
   </script>
 
