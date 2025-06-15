@@ -1,9 +1,10 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FFAM AI Tool by Nizam</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
     body { font-family: sans-serif; background: #f9fafb; }
     .app-card { background: white; border-radius: 12px; padding: 1rem; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
@@ -15,52 +16,84 @@
   <header class="bg-purple-700 text-white py-6 text-center">
     <h1 class="text-3xl font-bold">FFAM AI Tool</h1>
     <p class="text-sm mt-1">Create, Share & Publish Android Apps Instantly</p>
-  </header>  <main class="max-w-4xl mx-auto px-4 py-6">
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-6">
     <section class="mb-6">
       <input type="text" placeholder="Search app type (e.g. Quiz, OTT)" class="w-full border p-3 rounded" />
-    </section><section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="app-list">
-  <div class="app-card">
-    <img src="movieapp.png" alt="Movie App" class="w-full mb-2">
-    <h2 class="font-bold text-lg">🎬 Movie App</h2>
-    <p class="text-sm text-gray-600 mb-3">Multilingual movie streaming app with premium plans and subtitle support.</p>
-    <a href="public/movieapp.apk" class="block bg-green-600 text-white text-center py-2 rounded">📥 Download APK</a>
-  </div>
+    </section>
 
-  <div class="app-card">
-    <img src="quizapp.png" alt="Quiz App" class="w-full mb-2">
-    <h2 class="font-bold text-lg">🧠 Quiz App</h2>
-    <p class="text-sm text-gray-600 mb-3">Interactive quiz app with timer, leaderboard, and category selection.</p>
-    <a href="public/quizapp.apk" class="block bg-green-600 text-white text-center py-2 rounded">📥 Download APK</a>
-  </div>
-</section>
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="app-list">
+      <div class="app-card">
+        <img src="public/movieapp.png" alt="Movie App" class="w-full mb-2">
+        <h2 class="font-bold text-lg">🎬 Movie App</h2>
+        <p class="text-sm text-gray-600 mb-3">Multilingual movie streaming app with premium plans and subtitle support.</p>
+        <button onclick="downloadApp('movieapp.apk')" class="block bg-green-600 text-white text-center py-2 rounded">📥 Download APK</button>
+      </div>
 
-<section class="mt-12">
-  <h2 class="text-xl font-bold mb-4">🚀 Submit Your App to FFAM AI Store</h2>
-  <form class="bg-white p-6 rounded shadow space-y-4">
-    <input type="text" placeholder="App Title" class="w-full p-3 border rounded">
-    <input type="file" accept="image/*" class="w-full p-2 border rounded">
-    <input type="file" accept=".apk,.aab" class="w-full p-2 border rounded">
-    <textarea placeholder="App Description" rows="4" class="w-full p-3 border rounded"></textarea>
-    <button class="bg-purple-700 text-white px-4 py-2 rounded w-full">Submit for Review</button>
-  </form>
-</section>
+      <div class="app-card">
+        <img src="public/quizapp.png" alt="Quiz App" class="w-full mb-2">
+        <h2 class="font-bold text-lg">🧠 Quiz App</h2>
+        <p class="text-sm text-gray-600 mb-3">Interactive quiz app with timer, leaderboard, and category selection.</p>
+        <button onclick="downloadApp('quizapp.apk')" class="block bg-green-600 text-white text-center py-2 rounded">📥 Download APK</button>
+      </div>
+    </section>
 
-<section class="mt-12">
-  <h2 class="text-xl font-bold mb-4 text-center">💰 Upgrade to FFAM AI Ultra Plan</h2>
-  <p class="text-center text-gray-700">Create unlimited apps and unlock AAB downloads</p>
-  <div class="text-center mt-4">
-    <p class="font-semibold">Pay ₹699 via UPI:</p>
-    <p class="text-lg font-bold text-purple-700">nizamuddin@ybl</p>
-    <p class="text-sm text-gray-500">(Account Holder: Jubeda – Verified UDYAM MSME)</p>
-    <img src="qr-code.png" alt="UPI QR Code" class="mx-auto mt-4 w-40 rounded shadow">
-    <button onclick="alert('Please complete your payment via UPI and click OK to continue.')" class="mt-4 bg-green-600 text-white px-6 py-2 rounded">
-      ✅ I Have Paid – Unlock Downloads
-    </button>
-  </div>
-</section>
+    <section class="mt-12">
+      <h2 class="text-xl font-bold mb-4">🚀 Submit Your App to FFAM AI Store</h2>
+      <form class="bg-white p-6 rounded shadow space-y-4">
+        <input type="text" placeholder="App Title" class="w-full p-3 border rounded" />
+        <input type="file" accept="image/*" class="w-full p-2 border rounded" />
+        <input type="file" accept=".apk,.aab" class="w-full p-2 border rounded" />
+        <textarea placeholder="App Description" rows="4" class="w-full p-3 border rounded"></textarea>
+        <button class="bg-purple-700 text-white px-4 py-2 rounded w-full">Submit for Review</button>
+      </form>
+    </section>
 
-  </main>  <footer>
+    <section class="mt-12">
+      <h2 class="text-xl font-bold mb-4 text-center">💰 Upgrade to FFAM AI Ultra Plan</h2>
+      <p class="text-center text-gray-700">Create unlimited apps and unlock AAB downloads</p>
+      <div class="text-center mt-4">
+        <p class="font-semibold">Pay ₹699 via UPI:</p>
+        <p class="text-lg font-bold text-purple-700">nizamuddin@ybl</p>
+        <p class="text-sm text-gray-500">(Account Holder: Jubeda – Verified UDYAM MSME)</p>
+        <img src="public/qr-code.png" alt="UPI QR Code" class="mx-auto mt-4 w-40 rounded shadow" />
+        <button onclick="unlockPremium()" class="mt-4 bg-green-600 text-white px-6 py-2 rounded">
+          ✅ I Have Paid – Unlock Downloads
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
     FFAM AI Tool © 2025 – Built & Owned by Nizam. All Rights Reserved.
   </footer>
+
+  <script>
+    let freeUsed = false;
+    let isPremium = false;
+
+    function downloadApp(filename) {
+      if (isPremium || !freeUsed) {
+        const link = document.createElement('a');
+        link.href = `public/${filename}`;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        if (!isPremium) {
+          alert(\"You've used your Free Plan download. Upgrade for unlimited access.\");
+          freeUsed = true;
+        }
+      } else {
+        alert(\"Free Plan limit reached. Please upgrade to download more apps.\");
+      }
+    }
+
+    function unlockPremium() {
+      isPremium = true;
+      alert(\"✅ Payment confirmed. You can now download all AAB/APK files.\");
+    }
+  </script>
 </body>
 </html>
