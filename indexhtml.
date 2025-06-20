@@ -1,27 +1,133 @@
-const fs = require('fs');
-const path = require('path');
-const archiver = require('archiver');
-
-export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
-
-  const { title, desc } = req.body;
-  const time = Date.now();
-  const folder = path.join('/tmp', `ffam_${time}`);
-  fs.mkdirSync(folder, { recursive: true });
-
-  const html = `<html><head><title>${title}</title></head><body><h1>${title}</h1><p>${desc}</p></body></html>`;
-  fs.writeFileSync(path.join(folder, 'index.html'), html);
-
-  const zipPath = `/tmp/ffam_${time}.zip`;
-  const output = fs.createWriteStream(zipPath);
-  const archive = archiver('zip', { zlib: { level: 9 } });
-
-  archive.pipe(output);
-  archive.directory(folder, false);
-  await archive.finalize();
-
-  output.on('close', () => {
-    res.status(200).json({ zipUrl: `https://vercel-temp-link.com/ffam_${time}.zip` }); // Update if hosting downloads
-  });
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n.ai.in - AI Search Engine</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui;
+            background: linear-gradient(135deg, #f0f4ff, #e6f7ff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #2563eb, #1e40af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p.subtitle {
+            font-size: 1.3rem;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        .status-card {
+            background: #f1f5f9;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        .status-card h2 {
+            color: #2563eb;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+        .steps { margin-top: 30px; text-align: left; }
+        .steps h3 { margin: 20px 0 10px; color: #2563eb; }
+        ul { padding-left: 25px; margin-bottom: 20px; }
+        li { margin: 10px 0; }
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .domain-info {
+            display: inline-block;
+            background: #dbeafe;
+            color: #2563eb;
+            padding: 8px 15px;
+            border-radius: 30px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .container { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>n.ai.in</h1>
+        <p class="subtitle">AI-Powered Search Engine</p>
+        
+        <div class="status-card">
+            <h2>✅ Deployment Status: Active</h2>
+            <p>Your Vercel deployment is working correctly.</p>
+        </div>
+        
+        <div class="domain-info">n-xxye-nizamuddin-s-projects.vercel.app</div>
+        
+        <div class="steps">
+            <h3>Next Steps to Fix Custom Domain:</h3>
+            <ul>
+                <li>Go to your Vercel dashboard → Project → Settings → Domains</li>
+                <li>Add your custom domain: <code>n.ai.in</code></li>
+                <li>Add DNS records at your domain registrar:
+                    <ul>
+                        <li>Type: <code>A</code> | Name: <code>@</code> | Value: <code>76.76.21.21</code></li>
+                        <li>Type: <code>A</code> | Name: <code>@</code> | Value: <code>76.76.21.22</code></li>
+                        <li>Type: <code>CNAME</code> | Name: <code>www</code> | Value: <code>cname.vercel-dns.com</code></li>
+                    </ul>
+                </li>
+                <li>Wait 5-10 minutes for DNS changes to propagate</li>
+            </ul>
+        </div>
+        
+        <p>Powered by Vercel | AI Search Technology</p>
+    </div>
+    
+    <script>
+        // Simple domain check
+        const currentDomain = window.location.hostname;
+        document.querySelector('.domain-info').textContent = currentDomain;
+        
+        // Add automatic success message
+        if (!currentDomain.includes('vercel.app')) {
+            document.querySelector('.status-card').innerHTML += `
+                <p class="success">✔️ Custom domain is working!</p>
+                <p>Your site is live at: https://${currentDomain}</p>
+            `;
+        } else {
+            document.querySelector('.status-card').innerHTML += `
+                <p class="error">⚠️ Using Vercel subdomain</p>
+                <p>Follow the steps below to connect your custom domain</p>
+            `;
+        }
+    </script>
+</body>
+</html>
